@@ -33,6 +33,10 @@ h1.title {
   font-size: 2em;
   font-style: normal;
 }
+h1.title a {
+  color: white;
+  text-decoration: none;
+}
 table#movies {
   margin: 10px;
   border-collapse: collapse;
@@ -58,4 +62,12 @@ form label {
   line-height: 25px;
   font-weight: bold;
   color: maroon;
+}
+
+table#movies th.title {
+  background-color: yellow;
+}
+
+table#movies th.release_date {
+  background-color: yellow;
 }
