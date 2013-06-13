@@ -4,7 +4,10 @@ class MoviesController < ApplicationController
   def index
     @all_ratings, selected_ratings, @checked_ratings = Movie.ratings, [], Movie.ratings
 
-    if params[:sort] == "title" 
+    if params[:Search] 
+      @movies = Movie.where(:actors => params[:Search])
+      
+    elsif params[:sort] == "title" 
       @movies = Movie.group("title").where(:rating => session[:ratings]).all
       @checked_ratings = session[:ratings]
       @hilite1 = "title"

@@ -8,6 +8,11 @@
     = check_box_tag "ratings[#{rating}]", 1, (@checked_ratings.include?(rating) unless @checked_ratings.nil?), id: "ratings_#{rating}"
   = submit_tag 'Refresh'
 
+= form_tag movies_path, :method => :get do
+  %label{:for => 'Search'} Search
+  = text_field_tag 'Search'
+  = submit_tag 'Search'
+
 %table#movies
   %thead
     %tr
