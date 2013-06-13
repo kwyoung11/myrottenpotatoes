@@ -36,15 +36,22 @@ class MoviesController < ApplicationController
         @hilite2 = "release_date" 
         @movies = Movie.group("release_date").all
       end
-      @checked_ratings = session[:ratings]
+      if params[:ratings].nil? && !params[:commit].nil?
+        puts session[:ratings]
+        @checked_ratings = Movie.ratings
+      else
+        puts session[:ratings]
+        @checked_ratings = session[:ratings] unless session[:ratings].nil?
+      end
       if !session[:sort].nil?
         @movies = Movie.group(session[:sort]).where(:rating => session[:ratings]).all
       else
         @movies = Movie.where(:rating => session[:ratings]).all
       end
-      flash.keep
-      redirect_to movies_path(:sort => session[:sort], :rating => session[:ratings].to_param)
+      # flash.keep
+      # redirect_to movies_path(:sort => session[:sort], :rating => session[:ratings].to_param)
     end
+
 
   end
 
@@ -79,6 +86,11 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
+    redirect_to movies_path
+  end
+
+  def search_tmdb
+    flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
     redirect_to movies_path
   end
 
